@@ -6,7 +6,8 @@ from .base_effect import BaseEffect
 from .the_flippy import TheFlippy
 from .gradient_overlay_simple import GradientOverlaySimple
 from .the_stutter import TheStutter
-from .ki import Ki
+# from .ki import Ki  # Temporarily disabled
+from .ki_alt import KiAlt
 from .miner import Miner
 from .spotlight import Spotlight
 
@@ -27,7 +28,8 @@ class EffectEngine:
             'TheFlippy': TheFlippy,
             'GradientOverlaySimple': GradientOverlaySimple,
             'TheStutter': TheStutter,
-            'Ki': Ki,
+            # 'Ki': Ki,  # Temporarily disabled
+            'KiAlt': KiAlt,
             'Miner': Miner,
             'Spotlight': Spotlight
         }
