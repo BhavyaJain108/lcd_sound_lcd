@@ -4,18 +4,26 @@ from typing import Dict, Any
 from .base_effect import BaseEffect
 
 class Ki(BaseEffect):
-    """Diamond grid effect with proper diamond tessellation."""
+    """Diamond grid effect with animated diamond tessellation."""
     
     def __init__(self, name: str):
         super().__init__(name)
-        self.description = "Diamond grid effect - Numbers=diamond width, S=toggle"
+        self.description = "Diamond grid effect - Up/Down=size, S=toggle"
         
         # Effect state
         self.active = True
         self.diamond_width = 63  # Width of each diamond
+        self.max_diamond_width = 189  # 3x the original max (9*9*3 = 243, but let's use 189 for 3x63)
+        self.min_diamond_width = 9    # Minimum size
+        self.size_increment = 9       # Same increment as original (9 pixels per step)
         
-        # Pre-computed mask
-        self.invert_mask = None
+        # Animation state
+        self.animation_frame = 0      # Current frame in animation cycle
+        self.frame_counter = 0        # Counter for timing
+        
+        # Pre-computed masks
+        self.base_mask = None         # Static diamond pattern
+        self.animation_masks = {}     # Cache for animation frame masks
         self.cached_frame_size = None
         
     def _should_invert_pixel(self, x: int, y: int, n: int) -> bool:
@@ -90,7 +98,7 @@ class Ki(BaseEffect):
             self.set_parameter('active', not self.active)
             return True
         elif name == 'diamond_width':
-            new_value = max(3, min(99, int(value)))
+            new_value = max(self.min_diamond_width, min(self.max_diamond_width, int(value)))
             if new_value != self.diamond_width:
                 self.diamond_width = new_value
                 # Force mask regeneration on next frame
@@ -101,10 +109,15 @@ class Ki(BaseEffect):
         
     def handle_key_press(self, key: int, app_ref) -> bool:
         """Handle key press events."""
-        # Numbers 1-9 for diamond width (multiply by 9 for reasonable range)
-        if ord('1') <= key <= ord('9'):
-            width = (key - ord('0')) * 9
-            self.set_parameter('diamond_width', width)
+        # Up arrow - increase diamond size
+        if key == 0:  # Up arrow (Mac)
+            new_width = self.diamond_width + self.size_increment
+            self.set_parameter('diamond_width', new_width)
+            return True
+        # Down arrow - decrease diamond size
+        elif key == 1:  # Down arrow (Mac)
+            new_width = self.diamond_width - self.size_increment
+            self.set_parameter('diamond_width', new_width)
             return True
         # S key to toggle effect
         elif key == ord('s'):

@@ -1,7 +1,7 @@
 nope. it should be this. and are you casing by n? thats not a formula is it  
 
 for n = 7 the pattern is: 
-[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1...] (row 0 - 7-0s and 1-1s pattern repeating)
+[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1...] (row 0 - 7-0s and 1-1s pattern repeating) 
 [1,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1...] (row 1 - 5-0s and 3-1s pattern repeating with offset by one) 
 [1,1,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,1,1,1...] (row 2 - 3-0s and 5-1s pattern repeating with offset by 2)
 [1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1...]  (row 3 - 1-0s and 7-1s pattern repeating with offset by 3) 
